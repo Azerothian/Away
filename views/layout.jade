@@ -1,0 +1,14 @@
+!!! 5
+html(lang="en")
+
+  head
+    title= title
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js')
+    script(src='/nowjs/now.js')
+    script(src='/js/yabble.js')
+    script(src='/js/gamejs.js')
+    script(type='text/javascript')
+      require.setModuleRoot('./js/');
+      require.run('main')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body!= body

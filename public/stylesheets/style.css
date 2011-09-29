@@ -1,0 +1,24 @@
+body {
+	background: #fff;
+	color: #222;
+	margin: 0;
+	padding: 0;
+	width: 2000px;
+}
+
+#gjs-loader {
+	width: 50%;
+	height: 50%;
+	background: url('/images/ajax-loader.gif');
+}
+
+#tileSet {
+	width: 1024px;
+	height: 2016px;
+	background-image: url('/images/tileset1.png');
+	float:left;
+}
+#mainScreen {
+	
+	float: left;
+	}

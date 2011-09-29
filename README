@@ -1,0 +1,17 @@
+Away - 2D Html 5 MMO
+
+Free 2 Play - Micro Transactions etc to support.
+
+ - Multiple dimensions based on different era's in human history. 
+ - Dota Style Battlegrounds games, where diff dimensions invade each other.
+ - RPG Elements etc
+
+System Requirements
+Node.js
+
+Node Modules
+	- nowjs
+	- express
+	- jade (templating system for express)
+	
+btw Eclipse project has been setup and requires the Javascript Modules.
