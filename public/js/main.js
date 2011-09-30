@@ -4,7 +4,7 @@ var map = require('map');
 var player = require('player');
 var tile = require('tile');
 var settings = require("settings");
-var laylib = require("layer");
+var layer = require("layer");
 // --- End ---
 
 // Private Variables
@@ -42,21 +42,14 @@ gamejs.ready(function() {
 function initialise() {
 
 	for ( var i = 0; i < mapLayers; i++) {
-		layers[i] = laylib.GetNewLayer();
+		layers[i] = layer.GetNewLayer();
+		layers[i].Index = i;
 		layers[i].ConvertMapToLayer(map.GetMap()[i]);
 	}
 
 	currentPlayer = player.GetNewPlayer();
 	currentPlayer.OnPlayer_KeyDownSpace = function() {
-//		var posX = currentPlayer.position.x / tileSize;
-//		var posY = currentPlayer.position.y / tileSize;
-//		var t = map.GetMapTile(0, posX, posY);
-//		t.tileX++;
-//		if (t.tileX > 32) {
-//			t.tileX = 0;
-//			t.tileY++;
-//		}
-//		map.SetMapTile(0, posX, posY, t.tileX, t.tileY, t.tileSet);
+
 	};
 
 	display = gamejs.display.setMode([ screenWidth, screenHeight ]);
@@ -73,18 +66,17 @@ function GameLoop(msDuration) {
 	}
 	// gamejs.display.getSurface();
 	mainSurface.fill("#000");
-	layers.sort(function(a, b) {
-		return a.Index - b.Index;
-	});
-
-//	layers.forEach(function(l) {
-//		l.draw(mainSurface);
+//	layers.sort(function(a, b) {
+//		return a.Index - b.Index;
 //	});
+//
+	for ( var i = 0; i < layers.length; i++) {
+		layers[i].draw(mainSurface);
+	}
 
-	
-	var selectMap = $("#layerSelect").val();
-	layers[selectMap].draw(mainSurface);
-	
+	// var selectMap = $("#layerSelect").val();
+	// layers[selectMap].draw(mainSurface);
+
 	var ev = gamejs.event.get();
 	for ( var v = 0; v < ev.length; v++) {
 		event = ev[v];
@@ -98,8 +90,8 @@ function GameLoop(msDuration) {
 					var xs = calcTilePos(event.pos[0]);
 					var ys = calcTilePos(event.pos[1]);
 					var selectMap = $("#layerSelect").val();
-					SendMapTile(selectMap, settings.TileSheet, xs, ys, setTileX,
-							setTileY);
+					SendMapTile(selectMap, settings.TileSheet, xs, ys,
+							setTileX, setTileY);
 				}
 				break;
 
@@ -152,3 +144,70 @@ $(document).ready(function() {
 function calcTilePos(pos) {
 	return Math.floor(pos / tileSize);
 }
+//
+//var Layer = {
+//		tileMap: [],
+//		Index:0,
+//		tileSize: settings.TileSize,
+//		ClearTile: clearTile,
+//		Surface: new gamejs.Surface([ settings.ScreenWidth, settings.ScreenHeight ]),
+//		RenderTiles: function () {
+//			this._surface.clear();
+//			for ( var x = 0; x < this._tileMap.length; x++) {
+//				if (this._tileMap[x] != null) {
+//					for ( var y = 0; y < this._tileMap[x].length; y++) {
+//						renderTile(x, y);
+//					}
+//				}
+//			}
+//			
+//		},
+//		
+//		draw : function (s) {
+//			console.log(this.Index);
+//			s.blit(this.surface);
+//		},
+//		
+//		ConvertMapToLayer: function (map) {
+//			for ( var x = 0; x < map.length - 1; x++) {
+//				for ( var y = 0; y < map[x].length - 1; y++) {
+//					 debugger;
+//					setTile(map[x][y].tileSet, x, y, map[x][y].tileX,
+//							map[x][y].tileY);
+//				}
+//			}
+//			renderTiles();
+//		},
+//		
+//
+//		 clearTile: function(gridX, gridY) {
+//			var startX = gridX * this._tileSize;
+//			var startY = gridY * this._tileSize;
+//			this._surface.context.clearRect(startX, startY, this.tileSize, this.tileSize);
+//
+//		},
+//		
+//
+//		renderTile: function (gridX, gridY) {
+//			if (this._tileMap[gridX][gridY] != null) {
+//				this._tileMap[gridX][gridY].draw(this._surface);
+//			}
+//		},
+//		setTile: function (tileSet, gridX, gridY, tileX, tileY) {
+//			if (this._tileMap[gridX] == null) {
+//				this._tileMap[gridX] = [];
+//			}
+//			var tilePosX = gridX * this._tileSize;
+//			var tilePosY = gridY * this.tileSize;
+//
+//			this.tileMap[gridX][gridY] = tile.GetNewTile(tileSet, this._tileSize, tileX,
+//					tileY, tilePosX, tilePosY);
+//			clearTile(gridX, gridY);
+//			renderTile(gridX, gridY);
+//		}
+//};
+//
+//
+//
+//
+
